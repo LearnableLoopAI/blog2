@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Response to Cathy O’Neil’s Weapons of Math Destruction | Kobus Esterhuysen — Data Science Blog</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Response to Cathy O’Neil’s Weapons of Math Destruction" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Bias in data leads to bias in model behavior" />
+<meta property="og:description" content="Bias in data leads to bias in model behavior" />
+<link rel="canonical" href="https://learnableloop.ai/data_ethics/2017/12/16/Weapons-Of-Math-Destruction.html" />
+<meta property="og:url" content="https://learnableloop.ai/data_ethics/2017/12/16/Weapons-Of-Math-Destruction.html" />
+<meta property="og:site_name" content="Kobus Esterhuysen — Data Science Blog" />
+<meta property="og:image" content="https://learnableloop.ai/images/womd.jpeg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2017-12-16T00:00:00-06:00" />
+<script type="application/ld+json">
+{"url":"https://learnableloop.ai/data_ethics/2017/12/16/Weapons-Of-Math-Destruction.html","@type":"BlogPosting","headline":"Response to Cathy O’Neil’s Weapons of Math Destruction","dateModified":"2017-12-16T00:00:00-06:00","datePublished":"2017-12-16T00:00:00-06:00","image":"https://learnableloop.ai/images/womd.jpeg","mainEntityOfPage":{"@type":"WebPage","@id":"https://learnableloop.ai/data_ethics/2017/12/16/Weapons-Of-Math-Destruction.html"},"description":"Bias in data leads to bias in model behavior","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://learnableloop.ai/feed.xml" title="Kobus Esterhuysen --- Data Science Blog" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7YVR807GNV"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7YVR807GNV');
+</script>
+
+
+<link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Kobus Esterhuysen --- Data Science Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About Me</a><a class="page-link" href="/search/">Search</a><a class="page-link" href="/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Response to Cathy O’Neil’s Weapons of Math Destruction</h1><p class="page-description">Bias in data leads to bias in model behavior</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2017-12-16T00:00:00-06:00" itemprop="datePublished">
+        Dec 16, 2017
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      4 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/categories/#Data_Ethics">Data_Ethics</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+</ul><p>After reading Cathy O’Neil’s <a href="https://www.amazon.com/Weapons-Math-Destruction-Increases-Inequality/dp/0553418815">Weapons of Math Destruction</a>, I put down a few comments. Overall, I was impressed by O’Neil’s insight, honesty, sense of responsibility, and ethical focus. Her writing style is to the point, yet wrapped in artistic expression. To get going, she reveals a fundamental principle and problem with model creation: Models are opinions embedded in mathematics. By making choices over the data we collect, the questions we ask, and what data to include or exclude eventually, we impose our ideologies on the models we build. Often we also teach machines how to discriminate, and from then on they perform this disservice extremely efficiently. We allow our machines to capture poisonous prejudices from the past which embed within them the practice of being unfair.</p>
+
+<p>What was also striking to me was the widespread use of proxies instead of using the down-to-earth fundamental data. When proxies are used the data collection effort is usually much cheaper and simpler. However, models created from proxies are much easier to game or to exploit. It is just simpler to manipulate proxies than the complex reality represented by them. For example, auto insurers often use proxies like high school GPA and credit scores as predictors for driving risk, but omits the all-important drunk driving record. O’Neil also reflects on the use of really bad science when correlation is confused with causation, for example in the case of Frederick Hoffman’s 1896 report which basically declares that race is a strong predictor of life expectancy.</p>
+
+<p>O’Neil defines a “Weapon of Math Destruction” as having all three of the elements: <em>Opacity</em>, <em>Scale</em>, and <em>Damage</em>. I think this is an apt definition and these elements collectively shine light on just about every negative thing that could be said about the application of data science in society. Before reading this book, I was mostly unaware of the practices of gross unfairness and exploitation of the value of personal data going on. The uneasy part to me is how we have to make our case to a machine that has been infused with all kinds of prejudices and inaccuracies. We have no insight into the inner workings of this machine, and it does not help to ask either. There does not seem to be a human available to “rescue” us. If we do find a human, the response is usually that it is company policy and “fair” to abide by the machine’s decision. I started experiencing this sense of unease ever since telephone answering machines started making their appearance. There were some workarounds though, I used to just type a bunch of zeros and eventually I got to speak to a human. This book’s content takes the situation much further.</p>
+
+<p>Some of the WMDs O’Neil mentions are recidivism models like the LSI-R, the risk model attached to mortgage-backed securities during the great recession meltdown, the U.S. News &amp; World Report system of rating colleges, personality tests in hiring departments, scheduling software, e-scores (unlike the FICO scores they resemble), and micro-targeting (for example, in the political landscape). I like her suggestion that we should reframe the question of fairness: instead of squabbling over which metric should be used to determine the fairness of an algorithm, we should instead identify all the stakeholders and then consider and weigh the relative harms associated with each of them. The WMDs she mentions certainly do a lot of harm to many stakeholders. I think it makes a lot of sense to try and minimize the harm as much as possible.</p>
+
+<p>It is a good suggestion that we should regulate the mathematical models and algorithms that continue to have an ever-increasing impact on our everyday lives. Not only should the algorithms be held accountable but also the data scientists that construct them. We do need to measure the impact of algorithms and conduct algorithmic audits.  Quality assurance practices need to be applied to data science too. As the author puts it, “put the science into data science.”</p>
+
+<p>O’Neil states that the government has a powerful regulatory role to play. The government can begin by enforcing relevant laws that are already in place (FCRA, ECOA, ADA, HIPAA), and also work to make these laws stronger in the area of the application of algorithms. She even suggests that we could follow the European model which demands that all data collected must be approved by the user in the form of an opt-in. In addition, the reuse of data for other purposes is illegal, in other words, user data may not be sold. Another point made by O’Neil is that models that have significant impact on us, for example credit scores and e-scores, should be open and available to the public with the right to request data modification in case of errors. All of these points make a lot of sense to me. The time is ripe for the government to take action. Exploitation of the value of data obtained from the general public, but in particular from less privileged citizens, has gone on far too long.</p>
+
+  </div><a class="u-url" href="/data_ethics/2017/12/16/Weapons-Of-Math-Destruction.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>An easy to use blogging platform with support for Jupyter Notebooks.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/fastai" title="fastai"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/fastdotai" title="fastdotai"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
