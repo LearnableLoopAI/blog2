@@ -228,41 +228,41 @@ window.onload = wrap_img;
 <p>The present solution was inspired by the suggestion of <a href="https://sites.wustl.edu/jeffheaton/">Jeff Heaton</a>, McKelvey School of Engineering, Washington University in St. Louis.</p>
 <p>We will choose the following <strong>states</strong> for the environment:</p>
 $$ \Large
-\begin{align}
-&amp; s_1=\text{Age} \\
-&amp; s_2=\text{Salary} \\
-&amp; s_3=\text{Home Value} \\
-&amp; s_4=\text{Home Loan Amount} \\
-&amp; s_5=\text{Home Required Payment} \\
-&amp; s_6=\text{Tax Deferred Savings} \\
-&amp; s_7=\text{Taxable Savings} \\
-\end{align}
+\begin{aligned}
+s_1 &amp;= \text{Age} \\
+s_2 &amp;= \text{Salary} \\
+s_3 &amp;= \text{Home Value} \\
+s_4 &amp;= \text{Home Loan Amount} \\
+s_5 &amp;= \text{Home Required Payment} \\
+s_6 &amp;= \text{Tax Deferred Savings} \\
+s_7 &amp;= \text{Taxable Savings}
+\end{aligned}
 $$<p>The following <strong>actions</strong> (applied monthly) will be setup to influence the environment/investor:</p>
 $$ \Large
-\begin{align}
-&amp; a_1=\text{Home Loan Payment Amount} \\
-&amp; a_2=\text{Tax Deferred Deposit Amount} \\
-&amp; a_3=\text{Taxable Deposit Amount} \\
-&amp; a_4=\text{Luxury Spending Amount} \\
-\end{align}
+\begin{aligned}
+a_1 &amp;= \text{Home Loan Payment Amount} \\
+a_2 &amp;= \text{Tax Deferred Deposit Amount} \\
+a_3 &amp;= \text{Taxable Deposit Amount} \\
+a_4 &amp;= \text{Luxury Spending Amount}
+\end{aligned}
 $$<p>The values of all states and actions will be in terms of millions, i.e. M$ (mega-dollars) in the case of monetary amounts. Neural networks work better with smaller numbers.</p>
 <p>The model of the environment/investor will have the following <strong>parameters</strong>:</p>
 $$ \Large
-\begin{align}
-&amp; \theta_1=\text{Investor Start Age} \\
-&amp; \theta_2=\text{Investor Retire Age} \\
-&amp; \theta_3=\text{Inflation Rate} \\
-&amp; \theta_4=\text{Tax Rate} \\
-&amp; \theta_5=\text{Low Value of Investor's Salary when investment starts} \\
-&amp; \theta_6=\text{High Value of Investor's Salary when investment starts} \\
-&amp; \theta_7=\text{Expenses of the Investor (as fraction of salary)} \\
-&amp; \theta_8=\text{Low Value of House Price (as multiple of salary)} \\
-&amp; \theta_9=\text{High Value of House Price (as multiple of salary)} \\
-&amp; \theta_{10}=\text{Mortgage Interest Rate} \\
-&amp; \theta_{11}=\text{Investment Return Rate} \\
-&amp; \theta_{12}=\text{Tax Deferred Contributions Limit (government's annual cap)} \\
-&amp; \theta_{13}=\text{Company Match on Tax Deferred Contributions} \\
-\end{align}
+\begin{aligned}
+\theta_1 &amp;= \text{Investor Start Age} \\
+\theta_2 &amp;= \text{Investor Retire Age} \\
+\theta_3 &amp;= \text{Inflation Rate} \\
+\theta_4 &amp;= \text{Tax Rate} \\
+\theta_5 &amp;= \text{Low Value of Investor's Salary when investment starts} \\
+\theta_6 &amp;= \text{High Value of Investor's Salary when investment starts} \\
+\theta_7 &amp;= \text{Expenses of the Investor (as fraction of salary)} \\
+\theta_8 &amp;= \text{Low Value of House Price (as multiple of salary)} \\
+\theta_9 &amp;= \text{High Value of House Price (as multiple of salary)} \\
+\theta_{10} &amp;= \text{Mortgage Interest Rate} \\
+\theta_{11} &amp;= \text{Investment Return Rate} \\
+\theta_{12} &amp;= \text{Tax Deferred Contributions Limit (government's annual cap)} \\
+\theta_{13} &amp;= \text{Company Match on Tax Deferred Contributions} \\
+\end{aligned}
 $$<p>Rather than having the investor's salary directly as a parameter, we will have two parameters, one for the low value and one for the high value. This makes the model more flexible, in particular during training. The same applies for the two parameters used for the house price. In addition, we will add some variability for the interest rates. The latter variabilities may be considered <em>disturbances</em> experienced by the investor. The agent has the ability to incorporate such disturbances during its operation.</p>
 
 </div>
