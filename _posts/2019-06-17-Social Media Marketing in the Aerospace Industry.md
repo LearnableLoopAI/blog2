@@ -3,7 +3,7 @@ toc: true
 layout: post
 description: Social Media Marketing in the Aerospace Industry
 image: images/flying_airliner.png
-categories: [Marketing,social-media-marketing,  Deep Learning,word-embedding,sentence-embedding]
+categories: [Marketing,social_media_marketing,  Deep_Learning,word_embedding,sentence_embedding]
 title: The Use of Social Media Marketing in the Aerospace Industry
 ---
 
