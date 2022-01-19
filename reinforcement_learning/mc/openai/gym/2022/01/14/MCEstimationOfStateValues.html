@@ -109,7 +109,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      12 min read
+      13 min read
     
 </span></p>
 
@@ -307,6 +307,29 @@ $$<p>In numeric terms this means that, given a state, we take the sum of all rew
 <h2 id="5.-Implementation">
 <a class="anchor" href="#5.-Implementation" aria-hidden="true"><span class="octicon octicon-link"></span></a>5. Implementation<a class="anchor-link" href="#5.-Implementation"> </a>
 </h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Here is the algorithm:</p>
+
+<pre><code>Initialize:
+    pi         &lt;- policy to be evaluated
+    V(s)       &lt;- arbitrary state-value function
+    G_sum(s)   &lt;- 0.0, for all s; running sum
+    G_count(s) &lt;- 0 
+
+Repeat forever:
+    Choose S0 s.t. all states have probability &gt; 0
+    Generate an episode starting from S0 following pi
+    For each state s in the episode:
+        G          &lt;- return following the first occurrence of s
+        G_sum(s)   &lt;- G_sum(s) + G        #Add G to running sum
+        G_count(s) &lt;- G_count(s) + 1      #Increment running count
+        V(s)       &lt;- G_sum(s)/G_count(s) #update running state value</code></pre>
+
 </div>
 </div>
 </div>
