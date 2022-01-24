@@ -109,7 +109,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      13 min read
+      12 min read
     
 </span></p>
 
@@ -321,25 +321,6 @@ $$<p>In numeric terms this means that, given a state, we take the sum of all rew
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We consider two versions of the MC Prediction algorithm: A forward version, and a backward version.</p>
 
-<pre><code>-----------------------------------------------------
-First-visit MC Prediction (forward), for estimating V
------------------------------------------------------
-Input: a policy pi to be evaluated, positive integer n_episodes
-Output: state-value function V
-Initialize:
-    V(s)       &lt;- arbitrarily, for all s
-    G_sum(s)   &lt;- 0.0, for all s; running sum
-    G_cnt(s)   &lt;- 0, for all s; running count 
-
-Repeat forever:
-    Choose S0 s.t. all states have probability &gt; 0
-    Generate an episode starting from S0 following pi
-    For each state s in the episode:
-        G          &lt;- return following the first occurrence of s
-        G_sum(s)   &lt;- G_sum(s) + G        #Add G to running sum
-        G_count(s) &lt;- G_count(s) + 1      #Increment running count
-        V(s)       &lt;- G_sum(s)/G_count(s) #Update running state value</code></pre>
-
 </div>
 </div>
 </div>
@@ -422,11 +403,11 @@ Repeat forever:
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">policy1</span><span class="p">(</span><span class="n">observation</span><span class="p">):</span>
-    <span class="n">player_sum</span><span class="p">,</span> <span class="n">dealer_showing</span><span class="p">,</span> <span class="n">usable_ace</span> <span class="o">=</span> <span class="n">observation</span>
-    <span class="k">if</span> <span class="n">player_sum</span> <span class="o">&gt;=</span><span class="mi">20</span><span class="p">:</span>
-      <span class="k">return</span> <span class="mi">0</span> <span class="c1">#stick</span>
-    <span class="k">else</span><span class="p">:</span>
-      <span class="k">return</span> <span class="mi">1</span> <span class="c1">#hit</span>
+  <span class="n">player_sum</span><span class="p">,</span> <span class="n">dealer_showing</span><span class="p">,</span> <span class="n">usable_ace</span> <span class="o">=</span> <span class="n">observation</span>
+  <span class="k">if</span> <span class="n">player_sum</span> <span class="o">&gt;=</span><span class="mi">20</span><span class="p">:</span>
+    <span class="k">return</span> <span class="mi">0</span> <span class="c1">#stick</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="k">return</span> <span class="mi">1</span> <span class="c1">#hit</span>
 </pre></div>
 
     </div>
@@ -458,12 +439,12 @@ Repeat forever:
   <span class="n">episode</span> <span class="o">=</span> <span class="p">[]</span>
   <span class="n">state</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span> <span class="c1">#to a random state</span>
   <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-      <span class="n">action</span> <span class="o">=</span> <span class="n">policy</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
-      <span class="n">next_state</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">done</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span> <span class="c1"># St+1, Rt+1 OR s',r</span>
-      <span class="n">episode</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">reward</span><span class="p">))</span> <span class="c1"># St, At, Rt+1 OR s,a,r</span>
-      <span class="k">if</span> <span class="n">done</span><span class="p">:</span>
-          <span class="k">break</span>
-      <span class="n">state</span> <span class="o">=</span> <span class="n">next_state</span>
+    <span class="n">action</span> <span class="o">=</span> <span class="n">policy</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+    <span class="n">next_state</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">done</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span> <span class="c1"># St+1, Rt+1 OR s',r</span>
+    <span class="n">episode</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">reward</span><span class="p">))</span> <span class="c1"># St, At, Rt+1 OR s,a,r</span>
+    <span class="k">if</span> <span class="n">done</span><span class="p">:</span>
+      <span class="k">break</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">next_state</span>
   <span class="k">return</span> <span class="n">episode</span>
 </pre></div>
 
@@ -505,19 +486,19 @@ Repeat forever:
   <span class="c1">#Find all visited states in this episode</span>
   <span class="n">episode_states</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="nb">tuple</span><span class="p">(</span><span class="n">sar</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">for</span> <span class="n">sar</span> <span class="ow">in</span> <span class="n">episode</span><span class="p">]);</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"-set of episode_states: </span><span class="si">{</span><span class="n">episode_states</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span> <span class="k">if</span> <span class="n">diag</span> <span class="k">else</span> <span class="kc">None</span> <span class="c1">#put state in tuple and use as key</span>
   <span class="k">for</span> <span class="n">state</span> <span class="ow">in</span> <span class="n">episode_states</span><span class="p">:</span> <span class="c1">#don't use St, they come from set, time seq not relevant</span>
-      <span class="c1">#--find the first visit to the state in the episode</span>
-      <span class="c1"># first_visit_ix = next(i for i,sar in enumerate(episode) if sar[0]==state)</span>
-      <span class="n">visit_ixs</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">sar</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">episode</span><span class="p">)</span> <span class="k">if</span> <span class="n">sar</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="n">state</span><span class="p">];</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'---state </span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s1"> visit_ixs: </span><span class="si">{</span><span class="n">visit_ixs</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span> <span class="k">if</span> <span class="n">diag</span> <span class="k">else</span> <span class="kc">None</span>
-      <span class="n">first_visit_ix</span> <span class="o">=</span> <span class="n">visit_ixs</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"first_visit_ix: </span><span class="si">{</span><span class="n">first_visit_ix</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span> <span class="k">if</span> <span class="n">diag</span> <span class="k">else</span> <span class="kc">None</span>
-      <span class="c1">#--sum up all rewards since the first visit</span>
-      <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"episode[first_visit_ix:]: </span><span class="si">{</span><span class="n">episode</span><span class="p">[</span><span class="n">first_visit_ix</span><span class="p">:]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span> <span class="k">if</span> <span class="n">diag</span> <span class="k">else</span> <span class="kc">None</span>
-      <span class="c1"># print('episode[first_visit_ix + 1:]:', episode[first_visit_ix + 1:]) #NO - each r is the next reward Rt+1=r</span>
-      <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"rewards: </span><span class="si">{</span><span class="p">[</span><span class="n">sar</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">discount_factor</span><span class="o">**</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">sar</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">episode</span><span class="p">[</span><span class="n">first_visit_ix</span><span class="p">:])]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span> <span class="k">if</span> <span class="n">diag</span> <span class="k">else</span> <span class="kc">None</span>
-      <span class="n">G</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">sar</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">discount_factor</span><span class="o">**</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">sar</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">episode</span><span class="p">[</span><span class="n">first_visit_ix</span><span class="p">:])]);</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"G: </span><span class="si">{</span><span class="n">G</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span> <span class="k">if</span> <span class="n">diag</span> <span class="k">else</span> <span class="kc">None</span>
-      <span class="c1">#--average return for this state over all sampled episodes</span>
-      <span class="c1">#--instead of appending, keep a running sum and count</span>
-      <span class="n">G_sum</span><span class="p">[</span><span class="n">state</span><span class="p">]</span> <span class="o">+=</span> <span class="n">G</span><span class="p">;</span> <span class="n">G_cnt</span><span class="p">[</span><span class="n">state</span><span class="p">]</span> <span class="o">+=</span> <span class="mf">1.0</span>
-      <span class="n">V</span><span class="p">[</span><span class="n">state</span><span class="p">]</span> <span class="o">=</span> <span class="n">G_sum</span><span class="p">[</span><span class="n">state</span><span class="p">]</span><span class="o">/</span><span class="n">G_cnt</span><span class="p">[</span><span class="n">state</span><span class="p">]</span>
+    <span class="c1">#--find the first visit to the state in the episode</span>
+    <span class="c1"># first_visit_ix = next(i for i,sar in enumerate(episode) if sar[0]==state)</span>
+    <span class="n">visit_ixs</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">sar</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">episode</span><span class="p">)</span> <span class="k">if</span> <span class="n">sar</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="n">state</span><span class="p">];</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'---state </span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s1"> visit_ixs: </span><span class="si">{</span><span class="n">visit_ixs</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span> <span class="k">if</span> <span class="n">diag</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="n">first_visit_ix</span> <span class="o">=</span> <span class="n">visit_ixs</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"first_visit_ix: </span><span class="si">{</span><span class="n">first_visit_ix</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span> <span class="k">if</span> <span class="n">diag</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="c1">#--sum up all rewards since the first visit</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"episode[first_visit_ix:]: </span><span class="si">{</span><span class="n">episode</span><span class="p">[</span><span class="n">first_visit_ix</span><span class="p">:]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span> <span class="k">if</span> <span class="n">diag</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="c1"># print('episode[first_visit_ix + 1:]:', episode[first_visit_ix + 1:]) #NO - each r is the next reward Rt+1=r</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"rewards: </span><span class="si">{</span><span class="p">[</span><span class="n">sar</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">discount_factor</span><span class="o">**</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">sar</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">episode</span><span class="p">[</span><span class="n">first_visit_ix</span><span class="p">:])]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span> <span class="k">if</span> <span class="n">diag</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="n">G</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">sar</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">discount_factor</span><span class="o">**</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">sar</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">episode</span><span class="p">[</span><span class="n">first_visit_ix</span><span class="p">:])]);</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"G: </span><span class="si">{</span><span class="n">G</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span> <span class="k">if</span> <span class="n">diag</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="c1">#--average return for this state over all sampled episodes</span>
+    <span class="c1">#--instead of appending, keep a running sum and count</span>
+    <span class="n">G_sum</span><span class="p">[</span><span class="n">state</span><span class="p">]</span> <span class="o">+=</span> <span class="n">G</span><span class="p">;</span> <span class="n">G_cnt</span><span class="p">[</span><span class="n">state</span><span class="p">]</span> <span class="o">+=</span> <span class="mf">1.0</span>
+    <span class="n">V</span><span class="p">[</span><span class="n">state</span><span class="p">]</span> <span class="o">=</span> <span class="n">G_sum</span><span class="p">[</span><span class="n">state</span><span class="p">]</span><span class="o">/</span><span class="n">G_cnt</span><span class="p">[</span><span class="n">state</span><span class="p">]</span>
 </pre></div>
 
     </div>
@@ -587,26 +568,26 @@ Repeat forever:
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">mc_estimation</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">n_episodes</span><span class="p">,</span> <span class="n">discount_factor</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">monitored_states</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">diag</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-    <span class="n">G_sum</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
-    <span class="n">G_cnt</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
-    <span class="n">V</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span> <span class="c1">#final state-value function</span>
-    <span class="n">pi</span> <span class="o">=</span> <span class="n">policy1</span>
-    <span class="n">monitored_state_values</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_episodes</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">i</span><span class="o">%</span><span class="k">1000</span> == 0: print("\rEpisode {}/{}".format(i, n_episodes), end=""); sys.stdout.flush()
-        <span class="n">episode</span> <span class="o">=</span> <span class="n">generate_episode</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">pi</span><span class="p">);</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="se">\n</span><span class="s1">episode </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">episode</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span> <span class="k">if</span> <span class="n">diag</span> <span class="k">else</span> <span class="kc">None</span>
-        <span class="c1"># first_visit_forward_algorithm(episode, G_sum, G_cnt, V, discount_factor, diag)</span>
-        <span class="n">first_visit_backward_algorithm</span><span class="p">(</span><span class="n">episode</span><span class="p">,</span> <span class="n">G_sum</span><span class="p">,</span> <span class="n">G_cnt</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">discount_factor</span><span class="p">,</span> <span class="n">diag</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">monitored_states</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">ms</span> <span class="ow">in</span> <span class="n">monitored_states</span><span class="p">:</span> 
-                <span class="c1"># print("\rV[{}]: {}".format(ms, V[ms]), end=""); sys.stdout.flush()</span>
-                <span class="n">monitored_state_values</span><span class="p">[</span><span class="n">ms</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">V</span><span class="p">[</span><span class="n">ms</span><span class="p">])</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'</span><span class="p">)</span> <span class="k">if</span> <span class="n">diag</span> <span class="k">else</span> <span class="kc">None</span>
-    <span class="n">pp</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="sa">f</span><span class="s1">'G_sum: </span><span class="si">{</span><span class="n">G_sum</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span> <span class="k">if</span> <span class="n">diag</span> <span class="k">else</span> <span class="kc">None</span>
-    <span class="n">pp</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="sa">f</span><span class="s1">'G_cnt: </span><span class="si">{</span><span class="n">G_cnt</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span> <span class="k">if</span> <span class="n">diag</span> <span class="k">else</span> <span class="kc">None</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">'++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'</span><span class="p">)</span> <span class="k">if</span> <span class="n">diag</span> <span class="k">else</span> <span class="kc">None</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">monitored_state_values:'</span><span class="p">,</span> <span class="n">monitored_state_values</span><span class="p">)</span> <span class="k">if</span> <span class="n">diag</span> <span class="k">else</span> <span class="kc">None</span>
-    <span class="k">return</span> <span class="n">V</span><span class="p">,</span><span class="n">monitored_state_values</span>
+  <span class="n">G_sum</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+  <span class="n">G_cnt</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+  <span class="n">V</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span> <span class="c1">#final state-value function</span>
+  <span class="n">pi</span> <span class="o">=</span> <span class="n">policy1</span>
+  <span class="n">monitored_state_values</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_episodes</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">i</span><span class="o">%</span><span class="k">1000</span> == 0: print("\rEpisode {}/{}".format(i, n_episodes), end=""); sys.stdout.flush()
+    <span class="n">episode</span> <span class="o">=</span> <span class="n">generate_episode</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">pi</span><span class="p">);</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="se">\n</span><span class="s1">episode </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">episode</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span> <span class="k">if</span> <span class="n">diag</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="c1"># first_visit_forward_algorithm(episode, G_sum, G_cnt, V, discount_factor, diag)</span>
+    <span class="n">first_visit_backward_algorithm</span><span class="p">(</span><span class="n">episode</span><span class="p">,</span> <span class="n">G_sum</span><span class="p">,</span> <span class="n">G_cnt</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">discount_factor</span><span class="p">,</span> <span class="n">diag</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">monitored_states</span><span class="p">:</span>
+      <span class="k">for</span> <span class="n">ms</span> <span class="ow">in</span> <span class="n">monitored_states</span><span class="p">:</span> 
+        <span class="c1"># print("\rV[{}]: {}".format(ms, V[ms]), end=""); sys.stdout.flush()</span>
+        <span class="n">monitored_state_values</span><span class="p">[</span><span class="n">ms</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">V</span><span class="p">[</span><span class="n">ms</span><span class="p">])</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'</span><span class="p">)</span> <span class="k">if</span> <span class="n">diag</span> <span class="k">else</span> <span class="kc">None</span>
+  <span class="n">pp</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="sa">f</span><span class="s1">'G_sum: </span><span class="si">{</span><span class="n">G_sum</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span> <span class="k">if</span> <span class="n">diag</span> <span class="k">else</span> <span class="kc">None</span>
+  <span class="n">pp</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="sa">f</span><span class="s1">'G_cnt: </span><span class="si">{</span><span class="n">G_cnt</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span> <span class="k">if</span> <span class="n">diag</span> <span class="k">else</span> <span class="kc">None</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">'++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'</span><span class="p">)</span> <span class="k">if</span> <span class="n">diag</span> <span class="k">else</span> <span class="kc">None</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">monitored_state_values:'</span><span class="p">,</span> <span class="n">monitored_state_values</span><span class="p">)</span> <span class="k">if</span> <span class="n">diag</span> <span class="k">else</span> <span class="kc">None</span>
+  <span class="k">return</span> <span class="n">V</span><span class="p">,</span><span class="n">monitored_state_values</span>
 </pre></div>
 
     </div>
@@ -652,10 +633,10 @@ Repeat forever:
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">V</span><span class="p">,</span><span class="n">monitored_state_values</span> <span class="o">=</span> <span class="n">mc_estimation</span><span class="p">(</span>
-    <span class="n">env</span><span class="p">,</span> 
-    <span class="n">n_episodes</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> 
-    <span class="n">monitored_states</span><span class="o">=</span><span class="n">monitored_states</span><span class="p">,</span>
-    <span class="n">diag</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+  <span class="n">env</span><span class="p">,</span> 
+  <span class="n">n_episodes</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> 
+  <span class="n">monitored_states</span><span class="o">=</span><span class="n">monitored_states</span><span class="p">,</span>
+  <span class="n">diag</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -978,10 +959,10 @@ monitored_state_values: defaultdict(&lt;class 'list'&gt;, {(21, 7, False): [0.0,
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">V1</span><span class="p">,</span><span class="n">monitored_state_values1</span> <span class="o">=</span> <span class="n">mc_estimation</span><span class="p">(</span>
-    <span class="n">env</span><span class="p">,</span> 
-    <span class="n">n_episodes</span><span class="o">=</span><span class="mi">10_000</span><span class="p">,</span> 
-    <span class="n">monitored_states</span><span class="o">=</span><span class="n">monitored_states</span><span class="p">,</span>
-    <span class="n">diag</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+  <span class="n">env</span><span class="p">,</span> 
+  <span class="n">n_episodes</span><span class="o">=</span><span class="mi">10_000</span><span class="p">,</span> 
+  <span class="n">monitored_states</span><span class="o">=</span><span class="n">monitored_states</span><span class="p">,</span>
+  <span class="n">diag</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -1213,10 +1194,10 @@ monitored_state_values: defaultdict(&lt;class 'list'&gt;, {(21, 7, False): [0.0,
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">V2</span><span class="p">,</span><span class="n">monitored_state_values2</span> <span class="o">=</span> <span class="n">mc_estimation</span><span class="p">(</span>
-    <span class="n">env</span><span class="p">,</span> 
-    <span class="n">n_episodes</span><span class="o">=</span><span class="mi">500_000</span><span class="p">,</span> 
-    <span class="n">monitored_states</span><span class="o">=</span><span class="n">monitored_states</span><span class="p">,</span>
-    <span class="n">diag</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+  <span class="n">env</span><span class="p">,</span> 
+  <span class="n">n_episodes</span><span class="o">=</span><span class="mi">500_000</span><span class="p">,</span> 
+  <span class="n">monitored_states</span><span class="o">=</span><span class="n">monitored_states</span><span class="p">,</span>
+  <span class="n">diag</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 
     </div>
