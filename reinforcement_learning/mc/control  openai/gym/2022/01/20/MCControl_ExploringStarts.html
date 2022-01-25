@@ -4,9 +4,9 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Monte Carlo Control with Exploring Starts in Reinforcement Learning | Kobus Esterhuysen — Data Science Blog</title>
+<title>Monte Carlo 3: Control with Exploring Starts in Reinforcement Learning | Kobus Esterhuysen — Data Science Blog</title>
 <meta name="generator" content="Jekyll v4.1.1" />
-<meta property="og:title" content="Monte Carlo Control with Exploring Starts in Reinforcement Learning" />
+<meta property="og:title" content="Monte Carlo 3: Control with Exploring Starts in Reinforcement Learning" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Find the optimal policy using exploring starts" />
 <meta property="og:description" content="Find the optimal policy using exploring starts" />
@@ -17,7 +17,7 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2022-01-20T00:00:00-06:00" />
 <script type="application/ld+json">
-{"url":"https://learnableloop.ai/reinforcement_learning/mc/control%20%20openai/gym/2022/01/20/MCControl_ExploringStarts.html","@type":"BlogPosting","headline":"Monte Carlo Control with Exploring Starts in Reinforcement Learning","dateModified":"2022-01-20T00:00:00-06:00","datePublished":"2022-01-20T00:00:00-06:00","image":"https://learnableloop.ai/images/MCControl_ExploringStarts.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://learnableloop.ai/reinforcement_learning/mc/control%20%20openai/gym/2022/01/20/MCControl_ExploringStarts.html"},"description":"Find the optimal policy using exploring starts","@context":"https://schema.org"}</script>
+{"url":"https://learnableloop.ai/reinforcement_learning/mc/control%20%20openai/gym/2022/01/20/MCControl_ExploringStarts.html","@type":"BlogPosting","headline":"Monte Carlo 3: Control with Exploring Starts in Reinforcement Learning","dateModified":"2022-01-20T00:00:00-06:00","datePublished":"2022-01-20T00:00:00-06:00","image":"https://learnableloop.ai/images/MCControl_ExploringStarts.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://learnableloop.ai/reinforcement_learning/mc/control%20%20openai/gym/2022/01/20/MCControl_ExploringStarts.html"},"description":"Find the optimal policy using exploring starts","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://learnableloop.ai/feed.xml" title="Kobus Esterhuysen --- Data Science Blog" /><!-- the google_analytics_id gets auto inserted from the config file -->
 
@@ -103,13 +103,13 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Monte Carlo Control with Exploring Starts in Reinforcement Learning</h1><p class="page-description">Find the optimal policy using exploring starts</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-01-20T00:00:00-06:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">Monte Carlo 3: Control with Exploring Starts in Reinforcement Learning</h1><p class="page-description">Find the optimal policy using exploring starts</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-01-20T00:00:00-06:00" itemprop="datePublished">
         Jan 20, 2022
       </time>
        • <span class="read-time" title="Estimated read time">
     
     
-      17 min read
+      16 min read
     
 </span></p>
 
@@ -604,25 +604,6 @@ $$<p>In Monte Carlo policy iteration we alternate between policy evaluation and 
         <span class="k">if</span> <span class="n">i</span><span class="o">%</span><span class="k">1000</span> == 0: print("\rEpisode {}/{}".format(i, n_episodes), end=""); sys.stdout.flush()
         <span class="c1"># Policy Evaluation (requires exploration)          </span>
         <span class="n">episode</span> <span class="o">=</span> <span class="n">generate_episode</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">pi</span><span class="p">);</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="se">\n</span><span class="s1">episode </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">episode</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span> <span class="k">if</span> <span class="n">diag</span> <span class="k">else</span> <span class="kc">None</span>
-        <span class="c1"># episode_state_actions = set([(tuple(sar[0]), sar[1]) for sar in episode]); print(f'-episode_state_actions: {episode_state_actions}') if diag else None</span>
-        <span class="c1"># for state,action in episode_state_actions:</span>
-        <span class="c1">#     state_action = (state, action)</span>
-        <span class="c1">#     #--find the first visit to the state_action in the episode</span>
-        <span class="c1">#     # first_visit_ix = next(i for i,sar in enumerate(episode) if sar[0]==state and sar[1]==action)</span>
-        <span class="c1">#     visit_ixs = [i for i,sar in enumerate(episode) if sar[0]==state and sar[1]==action]; print(f'---state_action {state_action} visit_ixs: {visit_ixs}') if diag else None</span>
-        <span class="c1">#     first_visit_ix = visit_ixs[0]; print(f"first_visit_ix: {first_visit_ix}") if diag else None</span>
-        <span class="c1">#     #--sum up all rewards since the first visit</span>
-        <span class="c1">#     print(f"episode[first_visit_ix:]: {episode[first_visit_ix:]}") if diag else None</span>
-        <span class="c1">#     print(f"rewards: {[sar[2]*(discount_factor**i) for i,sar in enumerate(episode[first_visit_ix:])]}") if diag else None</span>
-        <span class="c1">#     G = sum([sar[2]*(discount_factor**i) for i,sar in enumerate(episode[first_visit_ix:])]); print(f"G: {G}") if diag else None</span>
-        <span class="c1">#     #--average return for this state_action over all sampled episodes</span>
-        <span class="c1">#     #--instead of appending, keep a running sum and count</span>
-        <span class="c1">#     G_sum[state_action] += G; G_cnt[state_action] += 1.0</span>
-        <span class="c1">#     Q[state][action] = G_sum[state_action]/G_cnt[state_action]</span>
-        <span class="c1"># # Policy Improvement (requires exploitation)</span>
-        <span class="c1"># for state,_ in episode_state_actions:</span>
-        <span class="c1">#     A_star = np.argmax(Q[state]) #greedify pi, max_a Q[state][0], Q[state][1]</span>
-        <span class="c1">#     pi[state] = A_star</span>
         <span class="c1"># first_visit_forward_algorithm(episode, G_sum, G_cnt, Q, pi, discount_factor, diag)</span>
         <span class="n">first_visit_backward_algorithm</span><span class="p">(</span><span class="n">episode</span><span class="p">,</span> <span class="n">G_sum</span><span class="p">,</span> <span class="n">G_cnt</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">pi</span><span class="p">,</span> <span class="n">discount_factor</span><span class="p">,</span> <span class="n">diag</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">monitored_state_actions</span><span class="p">:</span>
