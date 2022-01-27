@@ -41,10 +41,6 @@
 <lastmod>2021-11-29T00:00:00-06:00</lastmod>
 </url>
 <url>
-<loc>https://learnableloop.ai/reinforcement_learning/mc/openai/gym/2022/01/14/MCEstimationOfStateValues.html</loc>
-<lastmod>2022-01-14T00:00:00-06:00</lastmod>
-</url>
-<url>
 <loc>https://learnableloop.ai/reinforcement_learning/mc/openai/gym/2022/01/19/MCEstimationOfActionValues.html</loc>
 <lastmod>2022-01-19T00:00:00-06:00</lastmod>
 </url>
@@ -75,8 +71,5 @@
 </url>
 <url>
 <loc>https://learnableloop.ai/categories/</loc>
-</url>
-<url>
-<loc>https://learnableloop.ai/page2/</loc>
 </url>
 </urlset>
