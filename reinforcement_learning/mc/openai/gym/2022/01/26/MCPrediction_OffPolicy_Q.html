@@ -319,13 +319,16 @@ $$<p>In numeric terms this means that, given a state and an action, we take the 
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>On-policy methods, used so far in this series, represents a compromise. They learn action values not for the optimal policy but for a near-optimal policy that can still explore. The off-policy methods, on the other hand, make use of <em>two</em> policies -  one that is being optimized (called the <em>target</em> policy) and another one (the <em>behavior</em> policy) that is used for exploratory purposes.</p>
 <p>An important concept used by off-policy methods is <em>importance sampling</em>. This is a general technique for extimating expected values under one distribution by using samples from another. This allows us to weight returns according to the relative probability of a trajectory occurring under the target and behavior policies. This relative probability is called the importance-sampling ratio</p>
-$$
+$$ \large
 \rho_{t:T-1}=\frac{\prod_{k=t}^{T-1} \pi(A_k|S_k) p(S_{k+1}|S_k,A_k)}{\prod_{k=t}^{T-1} b(A_k|S_k) p(S_{k+1}|S_k,A_k)}=∏_{k=t}^{T-1} \frac{\pi(A_k|S_k)}{b(A_k|S_k)}
 $$<p>where $\pi$ is the <em>target</em> policy, and $b$ is the <em>behavior</em> policy.</p>
 <p>In oder to estimate $q_{\pi}(s,a)$ we need to estimate expected returns under the target policy. However, we only have access to returns due to the behavior 
 policy. To perform this "off-policy" procedure we can make use of the following:</p>
-$$
-q_\pi(s,a)=\mathbb E_\pi[G_t|S_t=s, A_t=a] = \mathbb E_b[\rho_{t:T-1}G_t|S_t=s, A_t=a]
+$$ \large
+\begin{aligned}
+q_\pi(s,a) &amp;= \mathbb E_\pi[G_t|S_t=s, A_t=a] \\
+           &amp;= \mathbb E_b[\rho_{t:T-1}G_t|S_t=s, A_t=a]
+\end{aligned}
 $$<p>This allows us to simply scale or weight the returns under $b$ to yield returns under $\pi$.</p>
 <p>In our current <em>prediction</em> problem, both the target and behavior policies are fixed.</p>
 
